@@ -1,0 +1,22 @@
+from django.db import models
+from django.contrib.auth.models import User
+from datetime import datetime
+from reading_statistics.utils import GetReadCount
+from ckeditor_uploader.fields import RichTextUploadingField
+# Create your models here.
+
+class Blog(models.Model,GetReadCount):
+	"""docstring for Blog"""
+	theme = models.CharField(max_length=60,default='无主题',verbose_name = '主题')
+	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='博主')
+	update = models.DateTimeField(verbose_name='更新时间',auto_now_add=True)
+	context = RichTextUploadingField(max_length = 500,null=True,blank=True)
+	comments = models.ForeignKey('Blog',null=True,blank=True,on_delete=models.SET_NULL)
+	# like = models.ForeignKey('Like',null=True,blank=True,on_delete=models.SET_NULL)
+	
+	def __str__(self):
+		return self.theme
+
+	class Meta:
+		verbose_name = '博客'
+		ordering = ['-update']

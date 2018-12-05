@@ -1,0 +1,32 @@
+
+.myborder{
+	border-radius: 5px;
+	box-shadow:0 0 5px rgba(0,0,0,.5);
+	margin-top: 100px;
+	padding-top: 0px;
+	overflow: hidden;
+}
+
+.box-center{
+	position: absolute;
+	left: 50%;
+	top:50%;
+	transform: translate(-50%,-50%);
+}
+.box-margin-top{
+	margin-top: 70px;
+	padding: 0px @!import;
+}
+.text-h-center{
+	text-align: center;
+}
+.padding-left{
+	padding-left: 20px @!import;
+}
+.no-pad-mar{
+	margin:0 @!import;
+	padding:0 @!import;
+}
+.django-ckeditor-widget{
+	width: 100%;
+}
