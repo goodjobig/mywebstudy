@@ -9,8 +9,13 @@ class BlogAdmin(admin.ModelAdmin):
 	class Meta:
 		ordering = ['-update']
 
-	def __str__(self):
-		return self.theme
 
+@admin.register(models.BlogType)
+class BlogTypeAdmin(admin.ModelAdmin):
+	list_display = ('id','type_name')
+
+	def count_related_blog(self):
+		self.blog_num = models.BlogType.objects.select_related('blog').count()
+		return self.blog_num
 
 admin.site.register(models.Blog,BlogAdmin)

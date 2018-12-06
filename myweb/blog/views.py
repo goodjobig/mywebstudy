@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from .models import Blog
-from reading_statistics.models import ReadCount
+from .forms import BlogForm
 from reading_statistics.utils import set_read_return_response
 from comment.models import Comment  
 from comment.forms import CommentForm
@@ -58,11 +58,17 @@ def show_blog(req):
 
 @login_required
 def write_blog(req):
+    context = {}
     if req.method == 'GET':
-        return HttpResponse('OK')
+        blog_form = BlogForm()
+        context['blog_form'] = blog_form
+        return render(req,'blog/write_blog.html',context)
     else:
-        pass
-        return HttpResponse('deal')
+        blog_form = BlogForm(req.POST)
+        if blog_form.is_valid():
+            return HttpResponse('ok')
+        else:
+            return HttpResponse('erro')
 
 
 

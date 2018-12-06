@@ -16,7 +16,7 @@ class RegisterForm(Form):
 	def clean(self):
 		if self.cleaned_data['password']\
 		!= self.cleaned_data['confirm_password']:
-		 	raise ValidationError('两次输入密码不一致')
+			raise ValidationError('两次输入密码不一致')
 		else:
 			self.cleaned_data.pop('confirm_password')
 		return self.cleaned_data
