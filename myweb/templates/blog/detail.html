@@ -11,7 +11,8 @@
 			<div class="panel-title">
 				{{ blog.theme }}
 				<span class="pull-right">
-					{{ blog.user }}
+					 {% load user_info %}
+                    {% get_nickname_or_username blog.user %}
 				</span>
 			</div>
 		</div>
@@ -24,9 +25,9 @@
 			<div class="panel panel-default " style="padding: 0;margin: 0">
 				<div class="panel-heading">
 					<div class="panel-title">
-						{{ comment.user }}回复
+                        {% get_nickname_or_username comment.user %}回复
 						{% if comment.parent_comment %}
-							{{ comment.parent_comment.user.username }}
+                            {% get_nickname_or_username comment.parent_comment.user %}
 						{% else %}
 							楼主
 						{% endif %}		

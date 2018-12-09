@@ -5,7 +5,7 @@ from . import models
 class BlogAdmin(admin.ModelAdmin):
 	"""docstring for BlogAdmin"""
 	list_display = ('id','theme','update','get_read_num','user')
-	
+	list_filter = ('id','theme','update',)
 	class Meta:
 		ordering = ['-update']
 

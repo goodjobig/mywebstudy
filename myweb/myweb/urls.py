@@ -24,9 +24,10 @@ urlpatterns = [
 	path('', views.home_page,name='home'),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    path('login/',u_views.acc_login,name='login'),
-    path('logout/',u_views.acc_logout,name='logout'),
-    path('register/',u_views.acc_register,name='register'),
+    # path('login/',u_views.acc_login,name='login'),
+    # path('logout/',u_views.acc_logout,name='logout'),
+    # path('register/',u_views.acc_register,name='register'),
+    path('user/',include('useroperations.urls')),
     path('comment/', include('comment.urls')),
     path('ckeditor', include('ckeditor_uploader.urls')),
 ]

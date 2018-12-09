@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse,get_object_or_404
+from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.core.paginator import Paginator
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -45,7 +45,7 @@ def paginator_genertor(obj,current_page_num):
 
 
 def show_blog(req):
-    blog_list = Blog.objects.all().order_by('pk')
+    blog_list = Blog.objects.all().order_by('-update')
     context = {}
     current_page_num = req.GET.get('page')
     page  = paginator_genertor(blog_list,current_page_num)
@@ -66,9 +66,22 @@ def write_blog(req):
     else:
         blog_form = BlogForm(req.POST)
         if blog_form.is_valid():
-            return HttpResponse('ok')
+            blog_type_list = blog_form.cleaned_data['blog_type_list']
+            blog_theme = blog_form.cleaned_data['theme']
+            blog_context = blog_form.cleaned_data['context']
+            blog_owner = req.user
+            b = Blog.objects.create(
+                theme = blog_theme,
+                user = blog_owner,
+                context = blog_context
+            )
+            b.blogtype_set.set(blog_type_list)
+            return redirect('blog')
         else:
-            return HttpResponse('erro')
+            blog_form = BlogForm(req.POST)
+            context[blog_form] = blog_form
+            context['erro'] = '**不知道为啥，博客发表失败！'
+            return render(req,'blog/write_blog.html',context)
 
 
 
@@ -99,3 +112,10 @@ def blog_detail(req,pk):
     context['comment_form'] = comment_form
     response = set_read_return_response(req,blog,context)
     return response
+
+
+def filter_blogtype():
+    pass
+
+def filter_blog():
+    pass

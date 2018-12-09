@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+{% load ckeditor_safe %}
+    <form action="" method="post" class="box-center">
+        {% csrf_token %}
+        {{ blog_form }}
+        <span class="danger pull-left">{{ erro }}</span>
+        <input type="submit" value="发&nbsp;&nbsp;表">
+    </form>
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+{% endblock %}
