@@ -30,3 +30,23 @@
 .django-ckeditor-widget{
 	width: 100%;
 }
+.bg_black_a{
+	background: #666;
+	overflow: hidden;
+	margin-bottom: 0px;
+}
+.bg_black_a a{
+	color: #eee;
+	text-align: center;
+}
+.bg_black_a a:hover h4{
+	color: #666;
+	text-align: center;
+}
+
+.bg_black_a a:link h4{
+	color: #000;
+	text-align: center;
+}
+
+

@@ -17,10 +17,10 @@ class UserProfile(models.Model):
 	def __str__(self):
 		return self.nickname
 
-@property
-def get_username_or_nickname(self):
-	if self.userprofile.nickname:
-		return self.userprofile.nickname
-	return self.username
+# @property
+# def get_username_or_nickname(self):
+# 	if self.userprofile.nickname:
+# 		return self.userprofile.nickname
+# 	return self.username
 
-User.get_username_or_nickname = get_username_or_nickname
+# User.get_username_or_nickname = get_username_or_nickname

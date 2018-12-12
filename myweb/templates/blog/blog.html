@@ -2,11 +2,15 @@
 {% load staticfiles %}
 {% block content %}
 {% load ckeditor_safe %}
-		<div class="jumbotron import-padding-left" style="padding-left: 20px!important;margin-bottom: 0px!important">
+		<div class="jumbotron import-padding-left" style="margin-bottom: 0px; padding: 20 10 20 30px;">
 			<p class="text-left">
-				<a href="{% url 'write_blog' %}">+</a>
 				<h3 class="center"><strong>欢迎来到博客页</strong><small>共有<u>{{page.paginator.count}}</u>篇文章</small></h3>
 			</p>
+			<ol class="breadcrumb">
+			  <li><a href="#">Home</a></li>
+			  <li><a href="#">Library</a></li>
+			  <li class="active">Data</li>
+			</ol>
 		</div>
 		<div class="container-fluid ">
 			<div class="row">			
@@ -24,10 +28,11 @@
 												<small>
 												浏览次数:{{blog.get_read_num}}
 												</small>
-												<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+												<!-- <span class="glyphicon glyphicon-user" aria-hidden="true"></span> -->
 												<span >
                                                     {% load user_info %}
                                                     {% get_nickname_or_username blog.user %}
+                                                    <img src="{% get_user_photo_url user%}" alt="" style="width: 32px;height: 32px;" class="img-circle">
 												</span>
 											</span>
 										</p>
