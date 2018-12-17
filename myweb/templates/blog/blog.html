@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '../base.html' %}
 {% load staticfiles %}
 {% block content %}
 {% load ckeditor_safe %}
@@ -7,9 +7,14 @@
 				<h3 class="center"><strong>欢迎来到博客页</strong><small>共有<u>{{page.paginator.count}}</u>篇文章</small></h3>
 			</p>
 			<ol class="breadcrumb">
-			  <li><a href="#">Home</a></li>
-			  <li><a href="#">Library</a></li>
-			  <li class="active">Data</li>
+				<li><a href="{% url 'blog' %}">全部</a></li>
+			  {% for blogtype in blogtypes %}
+			  	{% if available_field.blogtype == blogtype.id %}
+			  	<li class="active" ><a href="{% url 'blog' %}?blogtype={{ blogtype.id }};">{{ blogtype }}</a></li>
+			  	{% else %}
+			  	<li><a href="{% url 'blog' %}?blogtype={{ blogtype.id }};">{{ blogtype }}</a></li>
+			  	{% endif %}	  	
+			  {% endfor %}
 			</ol>
 		</div>
 		<div class="container-fluid ">
@@ -50,17 +55,17 @@
 								</div>
 							</div>
 						{% endfor %}
-                        <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation">
 		<ul class="pagination">
 			{% if page.has_previous %}
 				<li>
-					<a href="{% url 'blog' %}?page={{ page.previous_page_number }}">
+					<a href="{{ args_url }}page={{ page.previous_page_number }}">
 						&laquo;
 					</a>
 				</li>
 			{% else %}
 				<li class="disabled">
-					<a href="">
+					<a href="javascript:;">
 						&laquo;
 					</a>
 				</li>
@@ -68,13 +73,13 @@
 			{% for page_index in page.display_range %}
 				{% ifequal page_index page.number %}
 					<li class="active">
-						<a href="{% url 'blog' %}?page={{ page_index }}">
+						<a href="{{ args_url }}page={{ page_index }}">
 							{{ page_index }}
 						</a>
 					</li>
 				{% else %}
 					<li>
-						<a href="{% url 'blog' %}?page={{ page_index }}">
+						<a href="{{ args_url }}page={{ page_index }}">
 							{{ page_index }}
 						</a>
 					</li>
@@ -83,13 +88,13 @@
 			{% endfor %}
 			{% if page.has_next %}
 				<li>
-					<a href="{% url 'blog' %}?page={{ page.next_page_number }}">
+					<a href="{{ args_url }}page={{ page.next_page_number }}">
 						&raquo;
 					</a>
 				</li>
 			{% else %}
 				<li class="disabled">
-					<a  class="disabled" href="">
+					<a  class="disabled" href="javascript:;">
 						&raquo;
 					</a>
 				</li>
@@ -105,7 +110,9 @@
 							</div>
 						</div>
 						<div class="panel-body">
-							1111
+							{% for hot_blog in this_month_hot_blog %}
+								<li><a href="{% url 'blog_detail' hot_blog.pk %}">{{ hot_blog.theme|truncatechars:10}}</a><span>{{ hot_blog.get_read_num }}</span></li>
+							{% endfor %}
 						</div>
 					</div>	
 			</div>

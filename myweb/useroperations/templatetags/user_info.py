@@ -17,7 +17,7 @@ def get_userprofile(user):
 def get_nickname_or_username(user):
     up = get_userprofile(user)
     if not up:
-        return user.name  
+        return user.username  
     return up.nickname
 
 

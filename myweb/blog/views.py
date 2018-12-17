@@ -3,9 +3,9 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
-from .models import Blog
+from .models import Blog,BlogType
 from .forms import BlogForm
-from reading_statistics.utils import set_read_return_response
+from reading_statistics.utils import set_read_return_response,order_by_read_num
 from comment.models import Comment  
 from comment.forms import CommentForm
 # Create your views here.
@@ -44,16 +44,54 @@ def paginator_genertor(obj,current_page_num):
     return page
 
 
+def this_month_hot_blog():
+    from django.utils import timezone
+    today = timezone.now().today()
+    m = today.month
+    y = today.year
+    month_start_day = timezone.datetime(year=y,month=m,day=1)
+    blog_list_id = Blog.objects.filter(update__gt=month_start_day).values_list('id')
+    id_list = []
+    for blog_id in blog_list_id:
+        b_id = blog_id[0]
+        id_list.append(b_id) 
+    order_id = order_by_read_num(Blog,id_list)
+    blog_order_by_read = Blog.objects.filter(id__in=order_id)
+
+    return blog_order_by_read
+
+def blog_filter(filter_field):
+    compare_set = set()
+    compare_set.add('blogtype')
+    available_field = {}
+    if len(filter_field):
+        for i,v in filter_field.items():
+            if i in compare_set:
+                available_field[i] = int(v)
+    return Blog.objects.filter(**available_field).order_by('-update'),available_field
+
+def generate_args_url(path,fields):
+    path += '?' 
+    for i,v in fields.items():
+        path += '%s=%s;&'%(i,v)
+    return path
+
+
 def show_blog(req):
-    blog_list = Blog.objects.all().order_by('-update')
     context = {}
-    current_page_num = req.GET.get('page')
+    current_page_num = req.GET.get('page','')
+    blog_list,available_field = blog_filter(req.GET,)
+    context['available_field'] = available_field
+    context['args_url'] = generate_args_url(req.path,available_field)
+    blogtypes = BlogType.objects.all()    
     page  = paginator_genertor(blog_list,current_page_num)
     blog_list = page.object_list
     context['active_app'] = req.resolver_match.url_name
     context['user'] = req.user
     context['blogs'] = blog_list
     context['page'] = page
+    context['blogtypes'] =blogtypes
+    context['this_month_hot_blog'] = this_month_hot_blog()
     return render(req,'blog/blog.html',context)
 
 @login_required

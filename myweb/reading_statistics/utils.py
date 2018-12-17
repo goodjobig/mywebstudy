@@ -3,7 +3,7 @@ from django.contrib.contenttypes.models import ContentType
 from .models import ReadCount
 from django.shortcuts import render
 
-class GetReadCount():
+class GetReadInfo():
 	def get_read_num(self):
 		try:
 			ct = ContentType.objects.get_for_model(self)
@@ -11,6 +11,22 @@ class GetReadCount():
 			return rm.read_count
 		except Exception as e:
 			return 0
+
+def order_by_read_num(model,obj_id_list):
+	ordered_obj_id = []
+	try:
+		ct = ContentType.objects.get_for_model(model)
+		rm_id_list = ReadCount.objects.filter(content_type=ct,object_id__in=obj_id_list).order_by('read_count').values('object_id')
+		for rm in rm_id_list:
+			if len(ordered_obj_id) < 10:
+				ordered_obj_id.append(rm['object_id'])
+	except Exception as e:
+		pass
+	return ordered_obj_id
+
+			
+
+
 
 def set_read_return_response(req,blog,context):
 	key = 'blog_%s_reades' % blog.id

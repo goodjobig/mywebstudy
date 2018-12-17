@@ -39,8 +39,6 @@ class CommentForm(forms.Form):
             self.cleaned_data['content_object'] = obj
         except ObjectDoesNotExist as e:
             raise ValidationError('博客不存在无法评论')
-        print('*'*30)
-        print(self.cleaned_data['parent_comment_id'])
         if self.cleaned_data['parent_comment_id']:
             self.cleaned_data['parent_comment'] = Comment.objects.get(id=self.cleaned_data['parent_comment_id'])
         else:

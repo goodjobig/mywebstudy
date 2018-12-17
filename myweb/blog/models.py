@@ -1,11 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
-from reading_statistics.utils import GetReadCount
+from reading_statistics.utils import GetReadInfo
 from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
 
-class Blog(models.Model,GetReadCount):
+# class BlogManager(models.Manager):
+# 	def __init__(self,*args,**kwargs):
+# 		super(BlogManager,self).__init__(*args,**kwargs)
+
+# 	def order_by_read_num(self):
+# 		pass
+
+
+class Blog(models.Model,GetReadInfo):
 	"""docstring for Blog"""
 	theme = models.CharField(max_length=60,default='无主题',verbose_name = '主题')
 	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='博主')
@@ -25,4 +33,7 @@ class Blog(models.Model,GetReadCount):
 class BlogType(models.Model):
 	type_name = models.CharField(max_length=60,verbose_name='博客类型')
 	blog = models.ManyToManyField(Blog,null=True,blank=True)
+
+	def __str__(self):
+		return self.type_name
 	

@@ -1,7 +1,37 @@
+{% load staticfiles %}
+<style type="text/css">
+.input_file{
+	width: 62px;
+	height: 29px;
+	overflow: hidden;
+	position: relative;
+	border:#eee 1.5px solid;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 16;
+	background: #337ab7;
+	color: #fff;
+}
+.input_file:focus{
+	background: #23527c;
+}
+.input_file input{
+	position: absolute;
+	top: 0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+</style>
 <div class="box-center">
-	<form method="post" action="" enctype="multipart/form-data">
+	<form method="post" action="" enctype="multipart/form-data" >
 		{% csrf_token %}
-		{{ profile_form }}
+		<p>{{ profile_form.nickname }}</p>
+		<div class="input_file primary">上&nbsp;&nbsp;传{{ profile_form.photo }}</div>
+		<p>{{ profile_form.number }}</p>
 		<input type="submit" value="保&nbsp;&nbsp;存">
 	</form>
 </div>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript">

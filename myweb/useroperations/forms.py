@@ -25,16 +25,22 @@ class RegisterForm(forms.Form):
 		return self.cleaned_data
 
 
-
 class UserProfileEditForm(forms.Form):
-	nickname = forms.fields.CharField(max_length=30)
-	photo = forms.fields.ImageField()
+	nickname = forms.fields.CharField(max_length=30,label="昵称")
+	photo = forms.fields.ImageField(
+		widget=forms.FileInput(
+			# attrs={
+			# 	'style':'overflow:hidden;width:100%;height:100%;'
+			# }
+			),
+		)
 	number = forms.fields.CharField(
 			max_length=11,
 			widget=forms.NumberInput,
 			validators=[
 				RegexValidator(r'^[0-9]{1,11}$', 'Enter a valid phone number.')
 			],
+			label='手机号码',
 		)
 	def __init__(self,*arg,**kwarg):
 		if 'user' in kwarg:
