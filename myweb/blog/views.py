@@ -1,16 +1,15 @@
+from django.conf import settings
 from django.shortcuts import render,HttpResponse,get_object_or_404,redirect
 from django.core.paginator import Paginator
-from django.conf import settings
+from django.core.cache import cache
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from .models import Blog,BlogType
 from .forms import BlogForm
-from reading_statistics.utils import set_read_return_response,order_by_read_num
+from reading_statistics.utils import set_read_return_response,model_order_by_read_num
 from comment.models import Comment  
 from comment.forms import CommentForm
 # Create your views here.
-
-
 
 def paginator_genertor(obj,current_page_num):
     '''
@@ -44,21 +43,7 @@ def paginator_genertor(obj,current_page_num):
     return page
 
 
-def this_month_hot_blog():
-    from django.utils import timezone
-    today = timezone.now().today()
-    m = today.month
-    y = today.year
-    month_start_day = timezone.datetime(year=y,month=m,day=1)
-    blog_list_id = Blog.objects.filter(update__gt=month_start_day).values_list('id')
-    id_list = []
-    for blog_id in blog_list_id:
-        b_id = blog_id[0]
-        id_list.append(b_id) 
-    order_id = order_by_read_num(Blog,id_list)
-    blog_order_by_read = Blog.objects.filter(id__in=order_id)
 
-    return blog_order_by_read
 
 def blog_filter(filter_field):
     compare_set = set()
@@ -81,6 +66,12 @@ def show_blog(req):
     context = {}
     current_page_num = req.GET.get('page','')
     blog_list,available_field = blog_filter(req.GET,)
+    #缓存获取本月热门博客
+    this_month_hot_blog= cache.get('this_month_hot_blog')
+    if not this_month_hot_blog:
+        this_month_hot_blog = model_order_by_read_num(Blog)
+        cache.set('this_month_hot_blog',this_month_hot_blog,3600)
+    #得到过滤后的url 以免 与page 参数发生冲突
     context['available_field'] = available_field
     context['args_url'] = generate_args_url(req.path,available_field)
     blogtypes = BlogType.objects.all()    
@@ -91,7 +82,7 @@ def show_blog(req):
     context['blogs'] = blog_list
     context['page'] = page
     context['blogtypes'] =blogtypes
-    context['this_month_hot_blog'] = this_month_hot_blog()
+    context['this_month_hot_blog'] =this_month_hot_blog
     return render(req,'blog/blog.html',context)
 
 @login_required

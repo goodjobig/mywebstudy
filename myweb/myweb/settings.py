@@ -107,7 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+#数据库缓存设置
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 

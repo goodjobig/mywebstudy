@@ -1,17 +1,15 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from django.contrib.contenttypes.fields import GenericRelation
 from reading_statistics.utils import GetReadInfo
 from ckeditor_uploader.fields import RichTextUploadingField
+from reading_statistics.models import ReadCount
 # Create your models here.
 
 # class BlogManager(models.Manager):
 # 	def __init__(self,*args,**kwargs):
 # 		super(BlogManager,self).__init__(*args,**kwargs)
-
-# 	def order_by_read_num(self):
-# 		pass
-
 
 class Blog(models.Model,GetReadInfo):
 	"""docstring for Blog"""
@@ -19,6 +17,7 @@ class Blog(models.Model,GetReadInfo):
 	user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='博主')
 	update = models.DateTimeField(verbose_name='更新时间',auto_now_add=True)
 	context = RichTextUploadingField(max_length = 500,null=True,blank=True)
+	read_statistics = GenericRelation(ReadCount)
 	# comments = models.ForeignKey('Blog',null=True,blank=True,on_delete=models.SET_NULL)
 	# like = models.ForeignKey('Like',null=True,blank=True,on_delete=models.SET_NULL)
 	

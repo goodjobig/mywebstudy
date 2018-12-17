@@ -28,7 +28,7 @@
 											<a  class="text-primary" href="{% url 'blog_detail' blog.pk %}">{{blog.theme}}</a>
 											<small>{{blog.update|date:'Y-m-d,H:i:s'}}</small>
 											{% load blog_info %}
-                                            {% get_blogtypes blog %}
+                                            <!-- {% get_blogtypes blog %} -->
 											<span class="pull-right">
 												<small>
 												浏览次数:{{blog.get_read_num}}
@@ -109,9 +109,9 @@
 								月榜
 							</div>
 						</div>
-						<div class="panel-body">
+						<div class="panel-body list-group">
 							{% for hot_blog in this_month_hot_blog %}
-								<li><a href="{% url 'blog_detail' hot_blog.pk %}">{{ hot_blog.theme|truncatechars:10}}</a><span>{{ hot_blog.get_read_num }}</span></li>
+								<li class="list-group-item"><a href="{% url 'blog_detail' hot_blog.id %}">{{ hot_blog.theme|truncatechars_html:8}}</a><span class="badge">{{ hot_blog.read_statistics__read_count }}</span></li>
 							{% endfor %}
 						</div>
 					</div>	

@@ -24,11 +24,21 @@ class RegisterForm(forms.Form):
 			self.cleaned_data.pop('confirm_password')
 		return self.cleaned_data
 
+class CustomFileInput(forms.FileInput):
+	'''
+		why not work?
+	'''
+	class Media:
+		css = {
+			'all' : ('css/profile_edit.html',),
+		}
+		js = ('js/jquery-3.3.1.min.js',)
+
 
 class UserProfileEditForm(forms.Form):
 	nickname = forms.fields.CharField(max_length=30,label="昵称")
 	photo = forms.fields.ImageField(
-		widget=forms.FileInput(
+		widget=CustomFileInput(
 			# attrs={
 			# 	'style':'overflow:hidden;width:100%;height:100%;'
 			# }
