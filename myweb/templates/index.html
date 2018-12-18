@@ -12,3 +12,20 @@
 		{% endif %}
 	</h1>
 {% endblock%}
+{% block script %}
+window.onload=function(){
+	ajax_get_graph_info()
+}
+function ajax_get_graph_info(){
+	$.ajax({
+		url:{% url 'graph_info' %},
+		type:'GET',
+		success:function(arg){
+			console.log(arg)
+		},
+		erro:function(){
+			alert('you cuo!')
+		}
+	})
+}
+{% endblock %}
