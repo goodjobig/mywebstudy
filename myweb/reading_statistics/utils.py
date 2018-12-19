@@ -48,13 +48,15 @@ def model_order_by_read_num(model):
                 .values('id','theme','read_statistics__read_count')
     return objs
 
-def get_read_quantum_in_days(model,days):
+def get_read_quantity_in_days(model,days):
     days = range(1,days+1)
     today = timezone.now().date()
-    quantum = []
+    quantity = []
+    dates = []
     for day in days:
         date = today - timezone.timedelta(days=day)
+        dates.append(date.strftime('%m/%d'))
         ct = ContentType.objects.get_for_model(model)
-        res = ReadCount.objects.filter(content_type=ct,create_time=date).aggregate(read_quantum=Sum('read_count'))
-        quantum.append(res['read_quantum'] or 0)
-    return quantum
+        res = ReadCount.objects.filter(content_type=ct,create_time=date).aggregate(read_quantity=Sum('read_count'))
+        quantity.append(res['read_quantity'] or 0)
+    return dates,quantity
