@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from useroperations import views as u_views
 from . import views
 urlpatterns = [
-	path('', views.home_page,name='home'),
+    path('', views.home_page,name='home'),
     path('graph_info/', views.graph_info,name='graph_info'),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),

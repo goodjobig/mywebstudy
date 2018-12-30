@@ -8,9 +8,11 @@ def get_userprofile(user):
     '''
     try:
         up = user.userprofile
+        print('&**********%s'%up)
         return up
     except User.userprofile.RelatedObjectDoesNotExist :
-     return False
+        return False
+
 
 
 @register.simple_tag

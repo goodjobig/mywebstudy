@@ -1,53 +1,53 @@
 
 .myborder{
-	border-radius: 5px;
-	box-shadow:0 0 5px rgba(0,0,0,.5);
-	margin-top: 100px;
-	padding-top: 0px;
-	overflow: hidden;
+    border-radius: 5px;
+    box-shadow:0 0 5px rgba(0,0,0,.5);
+    margin-top: 100px;
+    padding-top: 0px;
+    overflow: hidden;
 }
 
 .box-center{
-	position: absolute;
-	left: 50%;
-	top:50%;
-	transform: translate(-50%,-50%);
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
 }
 .box-margin-top{
-	margin-top: 70px;
-	padding: 0px @!import;
+    margin-top: 70px;
+    padding: 0px @!import;
 }
 .text-h-center{
-	text-align: center;
+    text-align: center;
 }
 .padding-left{
-	padding-left: 20px @!import;
+    padding-left: 20px @!import;
 }
 .no-pad-mar{
-	margin:0 @!import;
-	padding:0 @!import;
+    margin:0 @!import;
+    padding:0 @!import;
 }
 .django-ckeditor-widget{
-	width: 100%;
+    width: 100%;
 }
 .bg_black_a{
-	background: #666;
-	overflow: hidden;
-	margin-bottom: 0px;
+    background: #666;
+    overflow: hidden;
+    margin-bottom: 0px;
 }
 .bg_black_a a{
-	color: #eee;
-	overflow: hidden;
-	text-align: center;
+    color: #eee;
+    overflow: hidden;
+    text-align: center;
 }
 .bg_black_a a:hover h4{
-	color: #666;
-	text-align: center;
+    color: #666;
+    text-align: center;
 }
 
 .bg_black_a a:link h4{
-	color: #000;
-	text-align: center;
+    color: #000;
+    text-align: center;
 }
 
 /**********************************************************************/
@@ -79,7 +79,7 @@ li {
 }
  
 .mainmenu > li {
-	text-align: center;
+    text-align: center;
     background-color: #333;
     width: 100%;
     border-top: 1px solid #555;
@@ -148,7 +148,7 @@ li {
         border-left: solid 6px #484141;
         transition: border-left 220ms ease-in;
     }*/
- 	.submenu li {
+     .submenu li {
         line-height: 20px;
         height: 35px;
         padding-top: 11px;

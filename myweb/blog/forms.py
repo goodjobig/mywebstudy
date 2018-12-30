@@ -2,17 +2,17 @@ from django import forms
 from django.core.exceptions import ValidationError
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from .models import BlogType
-
+from myweb.widgets import input_factor
 
 class BlogForm(forms.Form):
     blog_type_query = BlogType.objects.all().values('id','type_name')
     blog_type_choice = []
     for i in blog_type_query:
         blog_type_choice.append((i['id'],i['type_name']))
-    blog_type = forms.fields.MultipleChoiceField(label=False,choices=blog_type_choice,widget=forms.CheckboxSelectMultiple)
-    theme = forms.fields.CharField(label=False,max_length=128)
+    blog_type = forms.fields.MultipleChoiceField(label='博客类型',choices=blog_type_choice,widget=input_factor('CheckboxSelectMultiple',cls_name=''))
+    theme = forms.fields.CharField(label='主题',max_length=128,widget=input_factor('TextInput'))
     context = forms.fields.CharField(
-        label=False,
+        label='博客内容',
         max_length=255,
         widget= CKEditorUploadingWidget(attrs={'class': 'form-control',},config_name='comment_ckeditor',)
     )

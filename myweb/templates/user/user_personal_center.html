@@ -2,14 +2,14 @@
 {% load staticfiles %}
 {% load user_info %}
 {% block title %}
-	{% get_nickname_or_username user %}的个人中心
+    {% get_nickname_or_username user %}的个人中心
 {% endblock %}
 {% block js %}
 {% endblock %}
 {% block content %}
 <div class="row">
-	<div class="col-md-3" style="padding: 0;margin: 0; background:#666; border-radius: 7px;">
-		<ul class="nav nav-pills nav-stacked mainmenu">
+    <div class="col-md-3" style="padding: 0;margin: 0; background:#666; border-radius: 7px;">
+        <ul class="nav nav-pills nav-stacked mainmenu">
             <li class="bg_black_a" role="presentation">个人信息</li>
             <ul class="submenu">
                 <div class="expand-triangle"></div>
@@ -17,26 +17,26 @@
                 <li><span>关注</span></li>
                 <li><span>收藏夹</span></li>
             </ul>
-			<li >博客管理</li>
+            <li >博客管理</li>
             <ul class="submenu">
                 <div class="expand-triangle"></div>
                 <li ><a href="{% url 'profile_edit' %}" target="msg_show_box"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span><a href="{% url 'write_blog' %}">写博客</a></a></li>
                 <li><span>删除博客</span></li>
                 <li><span>Go Premium</span></li>
             </ul>
-			<li >账号管理</li>
+            <li >账号管理</li>
             <ul class="submenu">
                 <div class="expand-triangle"></div>
                 <li ><a href="{% url 'profile_edit' %}" target="msg_show_box"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>编辑</a></li>
                 <li><span>Picture</span></li>
                 <li><span>Go Premium</span></li>
             </ul>
-			<li>退出登陆</li>
-		</ul>
-	</div>
-	<div class="col-md-9" style="padding: 0;margin: 0">
-		<iframe name="msg_show_box" id="msg_show_box" src="" frameborder="0" style="width: 100%;height: 500px" ></iframe>
-	</div>
+            <li>退出登陆</li>
+        </ul>
+    </div>
+    <div class="col-md-9" style="padding: 0;margin: 0">
+        <iframe name="msg_show_box" id="msg_show_box" src="" frameborder="0" style="width: 100%;height: 500px" ></iframe>
+    </div>
 </div>
 {% endblock%}
 {% block script %}

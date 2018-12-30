@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
+    'myweb',
     'blog',
     'useroperations',
     'reading_statistics',
@@ -184,3 +185,12 @@ CKEDITOR_CONFIGS = {
 #login_required 跳转
 # contrib.auth 下要 LOGIN_REDIRECT_URL = '/login/'
 LOGIN_URL = '/login/'
+
+
+#email setting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'stmp.g-tech.net.cn'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = 'jay@g-tech.net.cn'
+EMAIL_HOST_PASSWORD = 'jay82971480'
+EMAIL_USE_TLS = True

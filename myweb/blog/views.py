@@ -78,7 +78,8 @@ def show_blog(req):
     page  = paginator_genertor(blog_list,current_page_num)
     blog_list = page.object_list
     context['active_app'] = req.resolver_match.url_name
-    context['user'] = req.user
+    print(req.user,req.user.is_authenticated)
+    context['is_authenticated'] = req.user.is_authenticated
     context['blogs'] = blog_list
     context['page'] = page
     context['blogtypes'] =blogtypes
